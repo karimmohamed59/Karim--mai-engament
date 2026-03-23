@@ -21,6 +21,24 @@
             overflow: hidden;
         }
 
+        .floating-hearts {
+            position: fixed;
+            pointer-events: none;
+            font-size: 40px;
+            z-index: 1;
+        }
+
+        @keyframes heartFloat {
+            0% {
+                opacity: 1;
+                transform: translateY(0) translateX(0) scale(1) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100vh) translateX(50px) scale(0.5) rotate(360deg);
+            }
+        }
+
         .secret-counter {
             position: absolute;
             top: 20px;
@@ -30,6 +48,7 @@
             color: rgba(255, 255, 255, 0.3);
             cursor: default;
             user-select: none;
+            z-index: 10;
         }
 
         .container {
@@ -47,10 +66,11 @@
             cursor: pointer;
             transition: transform 0.3s ease;
             position: relative;
+            transform-style: preserve-3d;
         }
 
         .envelope:hover {
-            transform: translateY(-10px);
+            transform: translateY(-10px) scale(1.02);
         }
 
         .envelope-flap {
@@ -60,42 +80,28 @@
             border-radius: 50% 50% 0 0;
             margin: 0 auto 20px;
             position: relative;
-            animation: flapOpen 1.5s ease-in-out forwards;
             transform-origin: top;
-        }
-
-        @keyframes flapOpen {
-            0% {
-                transform: rotateX(0deg);
-            }
-            100% {
-                transform: rotateX(-120deg);
-            }
+            transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
         .envelope.opened .envelope-flap {
-            animation: none;
-            transform: rotateX(-120deg);
+            transform: rotateX(-150deg);
         }
 
         .letter {
             opacity: 0;
-            animation: letterSlide 1s ease-out 0.8s forwards;
+            transform: scale(0.8) translateZ(0);
+            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
             background: #fffaf0;
             padding: 30px;
             border-radius: 5px;
             box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        @keyframes letterSlide {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .envelope.opened .letter {
+            opacity: 1;
+            transform: scale(1) translateZ(0);
         }
 
         .letter h1 {
@@ -130,11 +136,13 @@
         .hidden-content {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.5s ease-out;
+            opacity: 0;
+            transition: all 0.6s ease-out;
         }
 
         .hidden-content.show {
-            max-height: 600px;
+            max-height: 1000px;
+            opacity: 1;
         }
 
         .location-section {
@@ -143,6 +151,18 @@
             border-radius: 8px;
             margin: 20px 0;
             border-left: 4px solid #d63031;
+            animation: slideIn 0.6s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .location-title {
@@ -191,6 +211,10 @@
             box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
         }
 
+        .btn-location:active {
+            transform: translateY(0);
+        }
+
         .btn-yes {
             background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
             color: white;
@@ -201,6 +225,10 @@
         .btn-yes:hover {
             transform: scale(1.05);
             box-shadow: 0 6px 20px rgba(17, 153, 142, 0.4);
+        }
+
+        .btn-yes:active {
+            transform: scale(0.98);
         }
 
         .btn-no {
@@ -215,9 +243,13 @@
             box-shadow: 0 6px 20px rgba(245, 87, 108, 0.4);
         }
 
+        .btn-no:active {
+            transform: scale(0.98);
+        }
+
         .response-message {
             opacity: 0;
-            animation: popUp 0.6s ease-out forwards;
+            animation: popUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
             background: white;
             padding: 20px;
             border-radius: 10px;
@@ -231,7 +263,10 @@
         @keyframes popUp {
             0% {
                 opacity: 0;
-                transform: scale(0.5) translateY(20px);
+                transform: scale(0.3) translateY(50px);
+            }
+            50% {
+                transform: scale(1.05);
             }
             100% {
                 opacity: 1;
@@ -250,40 +285,56 @@
         }
 
         .open-instruction {
-            color: #636e72;
-            font-size: 16px;
-            margin-top: 20px;
+            color: #2d3436;
+            font-size: 20px;
+            margin-top: 30px;
             animation: pulse 2s infinite;
+            font-weight: bold;
+            letter-spacing: 2px;
         }
 
         @keyframes pulse {
             0%, 100% {
                 opacity: 0.6;
+                transform: scale(1);
             }
             50% {
                 opacity: 1;
+                transform: scale(1.05);
             }
         }
 
-        .hearts {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            animation: float 3s ease-in infinite;
+        .open-btn {
+            background: linear-gradient(135deg, #d63031 0%, #ff6b6b 100%);
+            color: white;
+            padding: 15px 40px;
+            font-size: 18px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-weight: bold;
+            box-shadow: 0 6px 20px rgba(214, 48, 49, 0.4);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
-        @keyframes float {
-            0% {
-                opacity: 0;
-                transform: translateY(0) scale(0);
-            }
-            50% {
-                opacity: 1;
-            }
-            100% {
-                opacity: 0;
-                transform: translateY(-100px) scale(0.5);
-            }
+        .open-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(214, 48, 49, 0.6);
+        }
+
+        .open-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .envelope-closed {
+            text-align: center;
+        }
+
+        .envelope-closed p {
+            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -294,18 +345,23 @@
         <div class="envelope" id="envelope">
             <div class="envelope-flap"></div>
             <div class="letter">
-                <h1>You Are Cordially Invited</h1>
-                <p>to celebrate the engagement of</p>
-                <div class="couple-names">
-                    Karim & Mai
-                </div>
-                <p>We would be delighted to have you join us for an evening of love, celebration, and cherished moments.</p>
-                
-                <div class="date-info">
-                    📅 April 18, 2026
+                <div class="envelope-closed" id="closedContent">
+                    <p class="open-instruction">✨ You Have a Special Invitation ✨</p>
+                    <button class="open-btn" onclick="openEnvelope()">OPEN ME</button>
                 </div>
 
                 <div class="hidden-content" id="hiddenContent">
+                    <h1>You Are Cordially Invited</h1>
+                    <p>to celebrate the engagement of</p>
+                    <div class="couple-names">
+                        Karim & Mai
+                    </div>
+                    <p>We would be delighted to have you join us for an evening of love, celebration, and cherished moments.</p>
+                    
+                    <div class="date-info">
+                        📅 April 18, 2026
+                    </div>
+
                     <div class="location-section">
                         <div class="location-title">📍 Venue Location</div>
                         <div class="location-text" id="locationText">
@@ -324,8 +380,6 @@
 
                     <div id="responseContainer"></div>
                 </div>
-
-                <div class="open-instruction" id="instruction">✨ Click to open the letter ✨</div>
             </div>
         </div>
     </div>
@@ -337,19 +391,57 @@
 
         const envelope = document.getElementById('envelope');
         const hiddenContent = document.getElementById('hiddenContent');
-        const instruction = document.getElementById('instruction');
+        const closedContent = document.getElementById('closedContent');
         const secretCounter = document.getElementById('secretCounter');
         const responseContainer = document.getElementById('responseContainer');
 
-        // Open envelope on click
-        envelope.addEventListener('click', function() {
-            if (!hiddenContent.classList.contains('show')) {
-                envelope.classList.add('opened');
-                hiddenContent.classList.add('show');
-                instruction.style.display = 'none';
-                createHearts();
+        // Create floating hearts background
+        function createBackgroundHearts() {
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'floating-hearts';
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.top = Math.random() * 20 - 10 + 'vh';
+                heart.style.fontSize = (Math.random() * 30 + 20) + 'px';
+                heart.style.animation = `heartFloat ${Math.random() * 8 + 6}s linear forwards`;
+                
+                document.body.appendChild(heart);
+
+                setTimeout(() => {
+                    heart.remove();
+                }, 8000);
+            }, 500);
+        }
+
+        // Open envelope function
+        function openEnvelope() {
+            envelope.classList.add('opened');
+            closedContent.style.display = 'none';
+            hiddenContent.classList.add('show');
+            createCelebrationHearts();
+        }
+
+        // Create celebration hearts on opening
+        function createCelebrationHearts() {
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'floating-hearts';
+                    heart.innerHTML = ['❤️', '💕', '💖', '💗', '💝'][Math.floor(Math.random() * 5)];
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.top = '50vh';
+                    heart.style.fontSize = '30px';
+                    heart.style.animation = `heartFloat ${Math.random() * 3 + 4}s ease-out forwards`;
+                    
+                    document.body.appendChild(heart);
+
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 4000);
+                }, i * 100);
             }
-        });
+        }
 
         // Toggle location display
         function toggleLocation() {
@@ -377,6 +469,7 @@
                 updateSecretCounter();
                 showResponse('yes');
                 hasResponded = true;
+                createCelebrationHearts();
             }
         }
 
@@ -407,26 +500,11 @@
             secretCounter.innerText = confirmedGuests;
         }
 
-        // Create floating hearts
-        function createHearts() {
-            for (let i = 0; i < 5; i++) {
-                setTimeout(() => {
-                    const heart = document.createElement('div');
-                    heart.classList.add('hearts');
-                    heart.innerHTML = '❤️';
-                    heart.style.left = Math.random() * 100 + '%';
-                    heart.style.top = '50%';
-                    document.body.appendChild(heart);
-
-                    setTimeout(() => {
-                        heart.remove();
-                    }, 3000);
-                }, i * 200);
-            }
-        }
-
-        // Initialize counter display
-        updateSecretCounter();
+        // Initialize
+        window.addEventListener('load', () => {
+            createBackgroundHearts();
+            updateSecretCounter();
+        });
     </script>
 </body>
 </html>
