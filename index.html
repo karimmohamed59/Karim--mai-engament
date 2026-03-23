@@ -54,7 +54,6 @@
         .container {
             max-width: 600px;
             width: 90%;
-            perspective: 1000px;
         }
 
         .envelope {
@@ -66,7 +65,6 @@
             cursor: pointer;
             transition: transform 0.3s ease;
             position: relative;
-            transform-style: preserve-3d;
         }
 
         .envelope:hover {
@@ -89,9 +87,9 @@
             transform: rotateX(-150deg);
         }
 
-        .letter {
+        .letter-content {
             opacity: 0;
-            transform: scale(0.8) translateZ(0);
+            transform: scale(0.8);
             transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
             background: #fffaf0;
             padding: 30px;
@@ -99,19 +97,19 @@
             box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        .envelope.opened .letter {
+        .envelope.opened .letter-content {
             opacity: 1;
-            transform: scale(1) translateZ(0);
+            transform: scale(1);
         }
 
-        .letter h1 {
+        .letter-content h1 {
             font-size: 32px;
             color: #d63031;
             margin-bottom: 15px;
             font-style: italic;
         }
 
-        .letter p {
+        .letter-content p {
             font-size: 18px;
             color: #2d3436;
             margin-bottom: 20px;
@@ -133,14 +131,14 @@
             font-weight: bold;
         }
 
-        .hidden-content {
+        .invitation-details {
             max-height: 0;
             overflow: hidden;
             opacity: 0;
             transition: all 0.6s ease-out;
         }
 
-        .hidden-content.show {
+        .envelope.opened .invitation-details {
             max-height: 1000px;
             opacity: 1;
         }
@@ -287,7 +285,7 @@
         .open-instruction {
             color: #2d3436;
             font-size: 20px;
-            margin-top: 30px;
+            margin-bottom: 20px;
             animation: pulse 2s infinite;
             font-weight: bold;
             letter-spacing: 2px;
@@ -318,6 +316,7 @@
             transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 2px;
+            width: 100%;
         }
 
         .open-btn:hover {
@@ -329,12 +328,13 @@
             transform: translateY(-1px);
         }
 
-        .envelope-closed {
+        .closed-letter {
             text-align: center;
         }
 
-        .envelope-closed p {
-            margin-bottom: 10px;
+        .closed-letter p {
+            margin-bottom: 20px;
+            font-size: 24px;
         }
     </style>
 </head>
@@ -344,13 +344,13 @@
     <div class="container">
         <div class="envelope" id="envelope">
             <div class="envelope-flap"></div>
-            <div class="letter">
-                <div class="envelope-closed" id="closedContent">
+            <div class="letter-content">
+                <div class="closed-letter" id="closedContent">
                     <p class="open-instruction">✨ You Have a Special Invitation ✨</p>
                     <button class="open-btn" onclick="openEnvelope()">OPEN ME</button>
                 </div>
 
-                <div class="hidden-content" id="hiddenContent">
+                <div class="invitation-details" id="invitationDetails">
                     <h1>You Are Cordially Invited</h1>
                     <p>to celebrate the engagement of</p>
                     <div class="couple-names">
@@ -390,7 +390,7 @@
         let locationShown = false;
 
         const envelope = document.getElementById('envelope');
-        const hiddenContent = document.getElementById('hiddenContent');
+        const invitationDetails = document.getElementById('invitationDetails');
         const closedContent = document.getElementById('closedContent');
         const secretCounter = document.getElementById('secretCounter');
         const responseContainer = document.getElementById('responseContainer');
@@ -418,7 +418,7 @@
         function openEnvelope() {
             envelope.classList.add('opened');
             closedContent.style.display = 'none';
-            hiddenContent.classList.add('show');
+            invitationDetails.style.display = 'block';
             createCelebrationHearts();
         }
 
