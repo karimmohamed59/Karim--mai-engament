@@ -4,75 +4,77 @@
 <meta charset="UTF-8">
 <title>Karim & Mai Engagement</title>
 
+<!-- Premium Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+
 <style>
 body {
     margin: 0;
-    font-family: 'Segoe UI', sans-serif;
     background: #f3ebee;
     text-align: center;
+    font-family: 'Poppins', sans-serif;
     overflow-x: hidden;
 }
 
 /* Envelope */
 .envelope {
-    margin-top: 60px;
+    margin-top: 70px;
     position: relative;
-    width: 200px;
-    height: 130px;
-    background: #eee;
-    border-radius: 12px;
+    width: 280px;
+    height: 180px;
+    background: #f0f0f0;
+    border-radius: 15px;
     margin-left: auto;
     margin-right: auto;
     cursor: pointer;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
 }
 
 .flap {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: #f5a3a3;
-    clip-path: polygon(0 0, 100% 0, 50% 60%);
-    transition: 0.6s;
+    background: #f8a5a5;
+    clip-path: polygon(0 0, 100% 0, 50% 65%);
+    transform-origin: top;
+    transition: 0.7s;
 }
 
 .envelope.open .flap {
     transform: rotateX(180deg);
 }
 
+/* Open Me label */
 .open-text {
     position: absolute;
-    top: -20px;
+    top: -30px;
     left: 50%;
     transform: translateX(-50%);
-    background: #e6e6e6;
-    padding: 10px 20px;
-    border-radius: 10px;
-    font-size: 16px;
+    background: white;
+    padding: 10px 25px;
+    border-radius: 25px;
+    font-size: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    font-weight: 500;
 }
 
 /* Card */
 .card {
     display: none;
-    margin: 40px auto;
-    width: 350px;
-    background: #eee;
-    padding: 25px;
-    border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-    animation: fadeIn 1s ease;
-}
-
-@keyframes fadeIn {
-    from {opacity: 0; transform: translateY(20px);}
-    to {opacity: 1; transform: translateY(0);}
+    margin: 50px auto;
+    width: 360px;
+    background: #f0f0f0;
+    padding: 30px;
+    border-radius: 25px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
 }
 
 /* Title */
 .title {
-    font-family: cursive;
-    font-size: 28px;
+    font-family: 'Great Vibes', cursive;
+    font-size: 36px;
     color: #e91e63;
+    margin-bottom: 10px;
 }
 
 /* Ring */
@@ -81,15 +83,16 @@ body {
     margin: 10px 0;
 }
 
-/* Info */
-.info {
-    margin: 10px 0;
+/* Typing text */
+.typing {
+    min-height: 22px;
+    margin: 8px 0;
     font-size: 16px;
 }
 
 /* Countdown */
 #countdown {
-    margin: 10px 0;
+    margin: 12px 0;
 }
 
 /* Button */
@@ -97,8 +100,8 @@ body {
     margin: 15px 0;
     background: #e91e63;
     color: white;
-    padding: 10px 20px;
-    border-radius: 20px;
+    padding: 10px 22px;
+    border-radius: 25px;
     display: inline-block;
     text-decoration: none;
 }
@@ -111,12 +114,18 @@ hr {
 /* RSVP */
 button {
     margin: 10px;
-    padding: 10px 18px;
+    padding: 10px 20px;
     border: none;
-    border-radius: 20px;
+    border-radius: 25px;
     cursor: pointer;
     background: #e91e63;
     color: white;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.1);
 }
 
 /* Counters */
@@ -166,20 +175,20 @@ button {
 <div id="noCount" class="counter">0</div>
 
 <div class="envelope" onclick="openEnvelope()">
-    <div class="open-text">📩 Open Me</div>
+    <div class="open-text">💌 Tap to Open</div>
     <div class="flap"></div>
 </div>
 
 <div id="card" class="card">
 
-    <div class="title">Karim & Mai Engagement</div>
+    <div class="title">Karim & Mai</div>
 
     <div class="ring">💍</div>
 
-    <div class="info">With joy in our hearts, we invite you to celebrate our engagement!</div>
-
-    <div class="info">📅 <b>April 18, 2026</b></div>
-    <div class="info">📍 Cairo, Egypt</div>
+    <div id="line1" class="typing"></div>
+    <div id="line2" class="typing"></div>
+    <div id="line3" class="typing"></div>
+    <div id="line4" class="typing"></div>
 
     <div id="countdown"></div>
 
@@ -204,13 +213,34 @@ function openEnvelope() {
     document.querySelector('.envelope').classList.add('open');
     setTimeout(() => {
         document.getElementById('card').style.display = 'block';
-    }, 500);
+        startTyping();
+    }, 600);
 }
 
+/* Typing */
+function typeLine(id, text, delay) {
+    let i = 0;
+    setTimeout(() => {
+        let interval = setInterval(() => {
+            document.getElementById(id).innerHTML += text.charAt(i);
+            i++;
+            if (i >= text.length) clearInterval(interval);
+        }, 35);
+    }, delay);
+}
+
+function startTyping() {
+    typeLine("line1", "With joy in our hearts,", 0);
+    typeLine("line2", "we invite you to celebrate our engagement 💖", 1500);
+    typeLine("line3", "📅 April 18, 2026", 3500);
+    typeLine("line4", "📍 Cairo, Egypt", 5000);
+}
+
+/* RSVP */
 function coming() {
     yes++;
     document.getElementById("yesCount").innerText = yes;
-    alert("We’re so happy you’re coming ❤️");
+    alert("We’re so excited to see you ❤️");
 }
 
 function notComing() {
@@ -226,12 +256,12 @@ setInterval(() => {
     const now = new Date().getTime();
     const diff = eventDate - now;
 
-    const days = Math.floor(diff / (1000*60*60*24));
-    const hours = Math.floor((diff / (1000*60*60)) % 24);
-    const minutes = Math.floor((diff / (1000*60)) % 60);
+    const d = Math.floor(diff / (1000*60*60*24));
+    const h = Math.floor((diff / (1000*60*60)) % 24);
+    const m = Math.floor((diff / (1000*60)) % 60);
 
     document.getElementById("countdown").innerHTML =
-        "⏳ " + days + " days " + hours + " hrs " + minutes + " min";
+        "⏳ " + d + " days " + h + " hrs " + m + " min";
 }, 1000);
 
 /* Hearts */
