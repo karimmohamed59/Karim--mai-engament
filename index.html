@@ -141,10 +141,6 @@ button:hover {
 
 <body>
 
-<audio id="romanticMusic" loop>
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-</audio>
-
 <div id="yesCount" class="counter">0</div>
 <div id="noCount" class="counter">0</div>
 
@@ -182,27 +178,22 @@ button:hover {
 <script>
 let yes = 0;
 let no = 0;
-let typed = false; // prevents repeated typing
+let typed = false; // flag to prevent repeated typing
 
 function openEnvelope() {
     const envelope = document.querySelector('.envelope');
     envelope.classList.add('open');
 
-    // Play music on first click
-    const music = document.getElementById('romanticMusic');
-    if (music.paused) music.play();
-
     const card = document.getElementById('card');
     card.style.display = 'block';
 
-    // Typing only once
     if (!typed) {
         startTyping();
         typed = true;
     }
 }
 
-/* Typing */
+/* Typing animation */
 function typeLine(id, text, delay) {
     let i = 0;
     setTimeout(() => {
@@ -250,7 +241,7 @@ setInterval(() => {
         "⏳ " + d + " days " + h + " hrs " + m + " min";
 }, 1000);
 
-/* Hearts */
+/* Hearts animation */
 setInterval(() => {
     let heart = document.createElement("div");
     heart.className = "heart";
