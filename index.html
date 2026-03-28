@@ -52,9 +52,7 @@ body {
     backface-visibility: hidden;
 }
 
-.envelope.open .flap {
-    transform: rotateX(-180deg);
-}
+.envelope.open .flap { transform: rotateX(-180deg); }
 
 /* Open text */
 .open-text {
@@ -83,10 +81,13 @@ body {
     border-radius: 22px;
     box-shadow: 0 25px 70px rgba(0,0,0,0.12);
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(30px) scale(0.95);
     transition: 0.8s ease;
 }
-.card.show { opacity: 1; transform: translateY(0); }
+.card.show {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
 
 /* ✨ Luxury gold shimmer title */
 .title {
@@ -122,7 +123,7 @@ button:hover { background: #b76e79; color: white; }
     transform: rotate(45deg);
     border-radius: 3px 3px 0 0;
     opacity: 0.85;
-    animation: floatUp 6s linear forwards, flutter 1.5s ease-in-out infinite alternate;
+    animation: floatUp 4s linear forwards, flutter 1.5s ease-in-out infinite alternate;
     box-shadow: 2px -2px 5px rgba(255,255,255,0.2), inset 0 0 6px rgba(255,255,255,0.4);
     z-index: 9999;
 }
@@ -172,7 +173,7 @@ button:hover { background: #b76e79; color: white; }
 
 <script>
 let yes=0, no=0, typed=false;
-const heartColors=['#b76e79','#e6c7a3','#c48a6a'];
+const heartColors=['#b76e79','#e6c7a3','#c48a6a','#f2d6c1','#d4a5a5'];
 
 function openEnvelope(){
     const env=document.getElementById('envelope');
@@ -202,22 +203,22 @@ function startTyping(){
     typeLine("line4","Cairo, Egypt – Galaa Club, The View Venue",5000);
 }
 
-function createFloatingHeartFromEnvelope(){
+function createFloatingHeart(){
     const envelope=document.getElementById('envelope');
     const rect=envelope.getBoundingClientRect();
     const heart=document.createElement('div');
     heart.className='floating-heart';
     heart.style.backgroundColor=heartColors[Math.floor(Math.random()*heartColors.length)];
-    heart.style.left=rect.left + 30 + Math.random()*(rect.width-60) + 'px';
-    heart.style.top=rect.top + 'px';
+    heart.style.left=(rect.left + 30 + Math.random()*(rect.width-60))+'px';
+    heart.style.top=(rect.top)+'px';
     document.body.appendChild(heart);
-    setTimeout(()=>heart.remove(),6000);
+    setTimeout(()=>heart.remove(),4000);
 }
 
 function coming(){
     yes++; document.getElementById("yesCount").innerText=yes;
     showPopup("We look forward to celebrating with you");
-    let heartsInterval=setInterval(createFloatingHeartFromEnvelope,300);
+    let heartsInterval=setInterval(createFloatingHeart,150);
     setTimeout(()=>clearInterval(heartsInterval),3000);
 }
 
