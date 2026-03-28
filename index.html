@@ -144,7 +144,7 @@ button:hover { background:#b76e79; color:white; }
     border-radius:15px;
 }
 
-/* ❤️ ROTATED FLOATING HEARTS */
+/* ❤️ FULL ROTATING HEARTS */
 .floating-heart {
     position: fixed;
     bottom: 0;
@@ -174,7 +174,7 @@ button:hover { background:#b76e79; color:white; }
         opacity: 1;
     }
     100% {
-        transform: translateY(-120vh) rotate(calc(var(--rotate) + 20deg));
+        transform: translateY(-120vh) rotate(calc(var(--rotate) + 180deg));
         opacity: 0;
     }
 }
@@ -257,7 +257,8 @@ function createFloatingHeart(){
     heart.style.left=Math.random()*window.innerWidth+'px';
     heart.style.backgroundColor=heartColors[Math.floor(Math.random()*heartColors.length)];
 
-    const rotation=25+Math.random()*40;
+    // FULL rotation
+    const rotation=Math.random()*360;
     heart.style.setProperty('--rotate', rotation+'deg');
 
     document.body.appendChild(heart);
