@@ -11,324 +11,139 @@
 <style>
 body {
     margin: 0;
-    background: linear-gradient(135deg, #f7f3f2, #ece6e3);
+    background: linear-gradient(135deg, #f5f1ef, #e9e2de);
     font-family: 'Poppins', sans-serif;
 
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
-
-    min-height: 100vh;
-    color: #444;
-    text-align: center;
+    align-items: center;
+    height: 100vh;
 }
 
-/* Envelope */
+/* Envelope container */
 .envelope {
-    margin-top: 60px;
-    width: 90%;
-    max-width: 360px;
-    height: 220px;
-    background: rgba(255,255,255,0.7);
-    backdrop-filter: blur(10px);
-    border-radius: 18px;
     position: relative;
+    width: 320px;
+    height: 220px;
     cursor: pointer;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.1);
-    transition: 0.4s;
 }
 
-.envelope:hover {
-    transform: translateY(-5px);
+/* Envelope base */
+.base {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #f3e8dc;
+    border-radius: 10px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.15);
 }
 
+/* Flap */
 .flap {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, #d6a77a, #c48a6a);
+    background: #e6d3c3;
     clip-path: polygon(0 0, 100% 0, 50% 65%);
     transform-origin: top;
-    transition: 0.8s ease;
+    transition: 1s ease;
+    z-index: 3;
 }
 
+/* Wax seal */
+.seal {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: #a94442;
+    border-radius: 50%;
+    bottom: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 4;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.3);
+}
+
+/* Letter */
+.letter {
+    position: absolute;
+    width: 90%;
+    height: 180px;
+    background: white;
+    top: 20px;
+    left: 5%;
+    border-radius: 6px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+
+    transform: translateY(40px);
+    opacity: 0;
+    transition: 1s ease;
+    z-index: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Open animation */
 .envelope.open .flap {
     transform: rotateX(180deg);
 }
 
-/* Open text */
-.open-text {
-    position: absolute;
-    top: -30px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: white;
-    padding: 8px 22px;
-    border-radius: 20px;
-    font-size: 13px;
-    letter-spacing: 1px;
-    color: #777;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-}
-
-/* Card */
-.card {
-    display: none;
-    margin-top: 40px;
-    width: 90%;
-    max-width: 400px;
-    background: rgba(255,255,255,0.85);
-    backdrop-filter: blur(12px);
-    padding: 40px 25px;
-    border-radius: 22px;
-    box-shadow: 0 25px 70px rgba(0,0,0,0.12);
-
-    opacity: 0;
-    transform: translateY(20px);
-    transition: 0.8s ease;
-}
-
-.card.show {
+.envelope.open .letter {
+    transform: translateY(-120px);
     opacity: 1;
-    transform: translateY(0);
 }
 
-/* ✨ LUXURY GOLD SHIMMER TITLE */
+/* Letter text */
+.letter-content {
+    text-align: center;
+}
+
 .title {
     font-family: 'Great Vibes', cursive;
-    font-size: 40px;
-    margin-bottom: 5px;
+    font-size: 34px;
 
-    background: linear-gradient(
-        120deg,
-        #b76e79 20%,
-        #e6c7a3 40%,
-        #ffffff 50%,
-        #e6c7a3 60%,
-        #b76e79 80%
-    );
-
+    background: linear-gradient(120deg,#b76e79,#e6c7a3,#fff,#e6c7a3,#b76e79);
     background-size: 200% auto;
     color: transparent;
     -webkit-background-clip: text;
-    background-clip: text;
 
-    animation: goldShimmer 5s ease-in-out infinite;
+    animation: shimmer 5s infinite;
 }
 
-/* Shimmer animation */
-@keyframes goldShimmer {
+@keyframes shimmer {
     0% { background-position: 200% center; }
     100% { background-position: -200% center; }
 }
 
-/* Divider */
-.divider {
-    width: 60px;
-    height: 2px;
-    background: linear-gradient(to right, transparent, #c48a6a, transparent);
-    margin: 12px auto 20px;
-}
-
-/* Subtitle */
 .subtitle {
-    letter-spacing: 2px;
-    font-size: 13px;
-    color: #999;
-    margin-bottom: 15px;
-}
-
-/* Text */
-.typing {
-    min-height: 22px;
-    margin: 8px 0;
-    font-size: 15px;
-    color: #555;
-}
-
-/* Countdown */
-#countdown {
-    margin: 18px 0;
+    margin-top: 10px;
     font-size: 14px;
     color: #777;
-}
-
-/* Button */
-.location-btn {
-    margin: 15px 0;
-    background: linear-gradient(135deg, #b76e79, #c48a6a);
-    color: white;
-    padding: 10px 26px;
-    border-radius: 25px;
-    text-decoration: none;
-    font-size: 14px;
-    display: inline-block;
-}
-
-/* Divider */
-hr {
-    margin: 30px 0;
-    border: none;
-    border-top: 1px solid #eee;
-}
-
-/* RSVP buttons */
-button {
-    margin: 8px;
-    padding: 10px 24px;
-    border-radius: 25px;
-    border: 1px solid #b76e79;
-    background: transparent;
-    color: #b76e79;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-button:hover {
-    background: #b76e79;
-    color: white;
-}
-
-/* Counters */
-.counter {
-    position: fixed;
-    top: 12px;
-    font-size: 13px;
-    color: #888;
-}
-#yesCount { left: 15px; }
-#noCount { right: 15px; }
-
-/* Popup */
-#popup {
-    display:none;
-    position:fixed;
-    top:50%;
-    left:50%;
-    transform:translate(-50%, -50%);
-    background:white;
-    padding:18px 25px;
-    border-radius:15px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.15);
-    font-size:16px;
-}
-
-/* Desktop zoom */
-@media (min-width: 1024px) {
-    body { zoom: 1.1; }
 }
 </style>
 </head>
 
 <body>
 
-<div id="yesCount" class="counter">0</div>
-<div id="noCount" class="counter">0</div>
-
 <div class="envelope" onclick="openEnvelope()">
-    <div class="open-text">Tap to Open</div>
+    <div class="base"></div>
     <div class="flap"></div>
+    <div class="seal"></div>
+
+    <div class="letter">
+        <div class="letter-content">
+            <div class="title">Karim & Mai</div>
+            <div class="subtitle">Engagement Invitation</div>
+        </div>
+    </div>
 </div>
-
-<div id="card" class="card">
-
-    <div class="title">Karim & Mai</div>
-    <div class="divider"></div>
-    <div class="subtitle">ENGAGEMENT</div>
-
-    <div id="line1" class="typing"></div>
-    <div id="line2" class="typing"></div>
-    <div id="line3" class="typing"></div>
-    <div id="line4" class="typing"></div>
-
-    <div id="countdown"></div>
-
-    <a class="location-btn" href="https://maps.app.goo.gl/DCoZfnU6cCvsSjgy9" target="_blank">
-        View Location
-    </a>
-
-    <hr>
-
-    <div><b>Will you join us?</b></div>
-
-    <button onclick="coming()">Accept</button>
-    <button onclick="notComing()">Decline</button>
-
-</div>
-
-<div id="popup"><span id="popupText"></span></div>
 
 <script>
-let yes = 0;
-let no = 0;
-let typed = false;
-
 function openEnvelope() {
-    document.querySelector('.envelope').classList.add('open');
-
-    setTimeout(() => {
-        const card = document.getElementById('card');
-        card.style.display = 'block';
-        setTimeout(() => card.classList.add('show'), 50);
-
-        if (!typed) {
-            startTyping();
-            typed = true;
-        }
-    }, 700);
+    document.querySelector('.envelope').classList.toggle('open');
 }
-
-function typeLine(id, text, delay) {
-    let i = 0;
-    setTimeout(() => {
-        let interval = setInterval(() => {
-            document.getElementById(id).innerHTML += text.charAt(i);
-            i++;
-            if (i >= text.length) clearInterval(interval);
-        }, 35);
-    }, delay);
-}
-
-function startTyping() {
-    typeLine("line1", "With joy in our hearts,", 0);
-    typeLine("line2", "we invite you to celebrate our engagement", 1500);
-    typeLine("line3", "April 18, 2026", 3500);
-    typeLine("line4", "Cairo, Egypt – Galaa Club, The View Venue", 5000);
-}
-
-function coming() {
-    yes++;
-    document.getElementById("yesCount").innerText = yes;
-    showPopup("We look forward to celebrating with you");
-}
-
-function notComing() {
-    no++;
-    document.getElementById("noCount").innerText = no;
-    showPopup("You will be missed");
-}
-
-function showPopup(message) {
-    const popup = document.getElementById("popup");
-    document.getElementById("popupText").innerText = message;
-    popup.style.display = "block";
-    setTimeout(() => popup.style.display = "none", 2500);
-}
-
-const eventDate = new Date("April 18, 2026 00:00:00").getTime();
-
-setInterval(() => {
-    const now = new Date().getTime();
-    const diff = eventDate - now;
-
-    const d = Math.floor(diff / (1000*60*60*24));
-    const h = Math.floor((diff / (1000*60*60)) % 24);
-    const m = Math.floor((diff / (1000*60)) % 60);
-
-    document.getElementById("countdown").innerHTML =
-        d + " days • " + h + " hrs • " + m + " min";
-}, 1000);
 </script>
 
 </body>
