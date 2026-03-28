@@ -38,7 +38,6 @@ body {
     perspective: 1000px;
     transform-style: preserve-3d;
 }
-
 .envelope:hover { transform: translateY(-5px); }
 
 .flap {
@@ -51,7 +50,6 @@ body {
     transition: 0.8s ease;
     backface-visibility: hidden;
 }
-
 .envelope.open .flap { transform: rotateX(-180deg); }
 
 /* Open text */
@@ -83,14 +81,14 @@ body {
     opacity: 0;
     transform: translateY(30px) scale(0.95);
     transition: 0.8s ease;
-    position: relative; /* needed for hearts relative to card */
+    position: relative;
 }
 .card.show {
     opacity: 1;
     transform: translateY(0) scale(1);
 }
 
-/* ✨ Luxury gold shimmer title */
+/* Luxury gold shimmer title */
 .title {
     font-family: 'Great Vibes', cursive;
     font-size: 40px;
@@ -119,22 +117,26 @@ button:hover { background: #b76e79; color: white; }
 /* Floating hearts */
 .floating-heart {
     position: absolute;
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
     transform: rotate(45deg);
-    border-radius: 3px 3px 0 0;
     opacity: 0.85;
-    animation: floatUp 4s linear forwards, flutter 1.5s ease-in-out infinite alternate;
+    animation: floatUpSmooth 3s linear forwards, flutter 1.5s ease-in-out infinite alternate;
+    border-radius: 3px 3px 0 0;
     box-shadow: 2px -2px 5px rgba(255,255,255,0.2), inset 0 0 6px rgba(255,255,255,0.4);
-    z-index: 9999;
 }
-.floating-heart::before, .floating-heart::after { content:""; position:absolute; width:14px; height:14px; background:inherit; border-radius:50%; }
-.floating-heart::before { top: -7px; left:0; } .floating-heart::after { left:7px; top:0; }
+.floating-heart::before, .floating-heart::after { content:""; position:absolute; width:16px; height:16px; background:inherit; border-radius:50%; }
+.floating-heart::before { top:-8px; left:0; } .floating-heart::after { left:8px; top:0; }
 
-@keyframes floatUp { 0% { opacity:0.85; transform:translateY(0) rotate(45deg);} 100% { opacity:0; transform:translateY(-120vh) rotate(45deg); } }
-@keyframes flutter { 0% { transform: translateX(0) rotate(45deg); } 100% { transform: translateX(12px) rotate(45deg); } }
+@keyframes floatUpSmooth {
+    0% { opacity: 1; transform: translateY(0) rotate(45deg); }
+    100% { opacity: 0; transform: translateY(-150px) rotate(45deg); }
+}
+@keyframes flutter {
+    0% { transform: translateX(0) rotate(45deg); }
+    100% { transform: translateX(12px) rotate(45deg); }
+}
 
-/* Desktop zoom */
 @media (min-width: 1024px) { body { zoom: 1.1; } }
 </style>
 </head>
@@ -204,7 +206,6 @@ function startTyping(){
     typeLine("line4","Cairo, Egypt – Galaa Club, The View Venue",5000);
 }
 
-// Floating hearts from card
 function createFloatingHeartFromCard(){
     const card=document.getElementById('card');
     const rect=card.getBoundingClientRect();
@@ -212,16 +213,16 @@ function createFloatingHeartFromCard(){
     heart.className='floating-heart';
     heart.style.backgroundColor=heartColors[Math.floor(Math.random()*heartColors.length)];
     heart.style.left=(rect.left + rect.width/2 + (Math.random()*60-30))+'px';
-    heart.style.top=(rect.top + rect.height - 40)+'px';
+    heart.style.top=(rect.bottom - 20)+'px';
     document.body.appendChild(heart);
-    setTimeout(()=>heart.remove(),4000);
+    setTimeout(()=>heart.remove(),3000);
 }
 
 function coming(){
     yes++; document.getElementById("yesCount").innerText=yes;
     showPopup("We look forward to celebrating with you");
-    let heartsInterval=setInterval(createFloatingHeartFromCard,150);
-    setTimeout(()=>clearInterval(heartsInterval),3000);
+    let heartsInterval=setInterval(createFloatingHeartFromCard,120);
+    setTimeout(()=>clearInterval(heartsInterval),2500);
 }
 
 function notComing(){ 
