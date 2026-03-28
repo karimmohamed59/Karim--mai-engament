@@ -35,7 +35,7 @@ body {
     border-radius: 18px;
     position: relative;
     cursor: pointer;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+    box-shadow: 0 25px 80px rgba(183, 110, 121, 0.25);
     transition: 0.4s;
 }
 
@@ -133,9 +133,10 @@ body {
 
 /* Subtitle */
 .subtitle {
-    letter-spacing: 2px;
-    font-size: 13px;
-    color: #999;
+    letter-spacing: 3px;
+    font-size: 14px;
+    color: #aa8a6b;
+    font-weight: 600;
     margin-bottom: 15px;
 }
 
@@ -145,6 +146,8 @@ body {
     margin: 8px 0;
     font-size: 15px;
     color: #555;
+    letter-spacing: 0.7px;
+    line-height: 1.5;
 }
 
 /* Countdown */
@@ -152,6 +155,8 @@ body {
     margin: 18px 0;
     font-size: 14px;
     color: #777;
+    font-weight: 500;
+    letter-spacing: 1.1px;
 }
 
 /* Button */
@@ -183,6 +188,7 @@ button {
     color: #b76e79;
     cursor: pointer;
     transition: 0.3s;
+    font-weight: 600;
 }
 
 button:hover {
@@ -212,6 +218,39 @@ button:hover {
     border-radius:15px;
     box-shadow:0 10px 25px rgba(0,0,0,0.15);
     font-size:16px;
+}
+
+/* Floating hearts */
+.floating-heart {
+    position: fixed;
+    bottom: -15px;
+    width: 14px;
+    height: 14px;
+    transform: rotate(45deg);
+    border-radius: 3px 3px 0 0;
+    opacity: 0.85;
+    animation: floatUp 6s linear forwards;
+    box-shadow:
+        2px -2px 5px rgba(255, 255, 255, 0.2),
+        inset 0 0 6px rgba(255, 255, 255, 0.4);
+    z-index: 9999;
+}
+
+.floating-heart::before,
+.floating-heart::after {
+    content: "";
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    background: inherit;
+    border-radius: 50%;
+}
+.floating-heart::before { top: -7px; left: 0; }
+.floating-heart::after { left: 7px; top: 0; }
+
+@keyframes floatUp {
+    0% { opacity: 0.85; transform: translateY(0) rotate(45deg); }
+    100% { opacity: 0; transform: translateY(-120vh) rotate(45deg); }
 }
 
 /* Desktop zoom */
@@ -264,14 +303,13 @@ let yes = 0;
 let no = 0;
 let typed = false;
 
+// Open envelope
 function openEnvelope() {
     document.querySelector('.envelope').classList.add('open');
-
     setTimeout(() => {
         const card = document.getElementById('card');
         card.style.display = 'block';
         setTimeout(() => card.classList.add('show'), 50);
-
         if (!typed) {
             startTyping();
             typed = true;
@@ -279,6 +317,7 @@ function openEnvelope() {
     }, 700);
 }
 
+// Typing animation
 function typeLine(id, text, delay) {
     let i = 0;
     setTimeout(() => {
@@ -297,10 +336,36 @@ function startTyping() {
     typeLine("line4", "Cairo, Egypt – Galaa Club, The View Venue", 5000);
 }
 
+// Popup
+function showPopup(message) {
+    const popup = document.getElementById("popup");
+    document.getElementById("popupText").innerText = message;
+    popup.style.display = "block";
+    setTimeout(() => popup.style.display = "none", 2500);
+}
+
+// Floating hearts colors
+const heartColors = ['#b76e79','#e6c7a3','#c48a6a'];
+
+// Create a floating heart
+function createFloatingHeart() {
+    const heart = document.createElement('div');
+    heart.className = 'floating-heart';
+    heart.style.backgroundColor = heartColors[Math.floor(Math.random() * heartColors.length)];
+    heart.style.left = (10 + Math.random() * 80) + 'vw';
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 6000);
+}
+
+// RSVP
 function coming() {
     yes++;
     document.getElementById("yesCount").innerText = yes;
     showPopup("We look forward to celebrating with you");
+    
+    // Generate hearts for 3 seconds
+    let heartsInterval = setInterval(createFloatingHeart, 300);
+    setTimeout(() => clearInterval(heartsInterval), 3000);
 }
 
 function notComing() {
@@ -309,23 +374,14 @@ function notComing() {
     showPopup("You will be missed");
 }
 
-function showPopup(message) {
-    const popup = document.getElementById("popup");
-    document.getElementById("popupText").innerText = message;
-    popup.style.display = "block";
-    setTimeout(() => popup.style.display = "none", 2500);
-}
-
+// Countdown
 const eventDate = new Date("April 18, 2026 00:00:00").getTime();
-
 setInterval(() => {
     const now = new Date().getTime();
     const diff = eventDate - now;
-
     const d = Math.floor(diff / (1000*60*60*24));
     const h = Math.floor((diff / (1000*60*60)) % 24);
     const m = Math.floor((diff / (1000*60)) % 60);
-
     document.getElementById("countdown").innerHTML =
         d + " days • " + h + " hrs • " + m + " min";
 }, 1000);
