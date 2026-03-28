@@ -36,7 +36,6 @@ body {
     box-shadow: 0 25px 80px rgba(183, 110, 121, 0.25);
     transition: 0.4s;
     perspective: 1000px;
-    transform-style: preserve-3d;
 }
 .envelope:hover { transform: translateY(-5px); }
 
@@ -48,7 +47,6 @@ body {
     clip-path: polygon(0 0, 100% 0, 50% 65%);
     transform-origin: top;
     transition: 0.8s ease;
-    backface-visibility: hidden;
 }
 .envelope.open .flap { transform: rotateX(-180deg); }
 
@@ -63,7 +61,6 @@ body {
     font-size: 13px;
     letter-spacing: 1px;
     color: #777;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
 }
 
 /* Card */
@@ -90,44 +87,30 @@ body {
 .title {
     font-family: 'Great Vibes', cursive;
     font-size: 40px;
-    margin-bottom: 5px;
-    background: linear-gradient(120deg,#b76e79 20%,#e6c7a3 40%,#ffffff 50%,#e6c7a3 60%,#b76e79 80%);
-    background-size: 200% auto;
-    color: transparent;
+    background: linear-gradient(120deg,#b76e79,#e6c7a3,#fff,#e6c7a3,#b76e79);
+    background-size: 200%;
     -webkit-background-clip: text;
-    animation: goldShimmer 5s infinite;
+    color: transparent;
+    animation: shimmer 5s infinite;
 }
-@keyframes goldShimmer {
-    0% { background-position:200% center; }
-    100% { background-position:-200% center; }
+@keyframes shimmer {
+    0% {background-position:200%;}
+    100% {background-position:-200%;}
 }
 
-.divider { width: 60px; height: 2px; background: linear-gradient(to right, transparent, #c48a6a, transparent); margin: 12px auto 20px; }
-.subtitle { letter-spacing: 3px; font-size: 14px; color: #aa8a6b; font-weight: 600; margin-bottom: 15px; }
-.typing { min-height: 22px; margin: 8px 0; font-size: 15px; color: #555; letter-spacing: 0.7px; line-height: 1.5; }
+.divider { width: 60px; height: 2px; background: #c48a6a; margin: 12px auto; }
+.subtitle { letter-spacing: 3px; font-size: 14px; color: #aa8a6b; }
+.typing { margin: 8px 0; }
 
-#countdown {
-    margin: 18px 0;
-    font-size: 14px;
-    color: #777;
-    font-weight: 500;
-}
+#countdown { margin: 18px 0; }
 
 .location-btn {
-    margin: 15px 0;
-    background: linear-gradient(135deg, #b76e79, #c48a6a);
+    background: linear-gradient(135deg,#b76e79,#c48a6a);
     color: white;
     padding: 10px 26px;
     border-radius: 25px;
     text-decoration: none;
-    font-size: 14px;
     display: inline-block;
-}
-
-hr {
-    margin: 30px 0;
-    border: none;
-    border-top: 1px solid #eee;
 }
 
 button {
@@ -138,20 +121,13 @@ button {
     background: transparent;
     color: #b76e79;
     cursor: pointer;
-    transition: 0.3s;
-    font-weight: 600;
 }
-button:hover {
-    background: #b76e79;
-    color: white;
-}
+button:hover { background:#b76e79; color:white; }
 
-/* Counters */
 .counter {
     position: fixed;
     top: 12px;
     font-size: 13px;
-    color: #888;
 }
 #yesCount { left: 15px; }
 #noCount { right: 15px; }
@@ -162,21 +138,19 @@ button:hover {
     position:fixed;
     top:50%;
     left:50%;
-    transform:translate(-50%, -50%);
+    transform:translate(-50%,-50%);
     background:white;
     padding:18px 25px;
     border-radius:15px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.15);
-    font-size:16px;
 }
 
-/* ❤️ FIXED HEARTS */
+/* ❤️ ROTATED FLOATING HEARTS */
 .floating-heart {
     position: fixed;
     bottom: 0;
     width: 18px;
     height: 18px;
-    transform: rotate(45deg);
+    transform: rotate(var(--rotate));
     animation: floatUp 4s linear forwards;
     z-index: 999999;
 }
@@ -195,12 +169,14 @@ button:hover {
 .floating-heart::after { left: 9px; top: 0; }
 
 @keyframes floatUp {
-    0% { transform: translateY(0) rotate(45deg); opacity: 1; }
-    100% { transform: translateY(-120vh) rotate(45deg); opacity: 0; }
-}
-
-@media (min-width: 1024px) {
-    body { zoom: 1.1; }
+    0% {
+        transform: translateY(0) rotate(var(--rotate));
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-120vh) rotate(calc(var(--rotate) + 20deg));
+        opacity: 0;
+    }
 }
 </style>
 </head>
@@ -216,7 +192,6 @@ button:hover {
 </div>
 
 <div id="card" class="card">
-
     <div class="title">Karim & Mai</div>
     <div class="divider"></div>
     <div class="subtitle">ENGAGEMENT</div>
@@ -235,103 +210,97 @@ button:hover {
     <hr>
 
     <div><b>Will you join us?</b></div>
-
     <button onclick="coming()">Accept</button>
     <button onclick="notComing()">Decline</button>
-
 </div>
 
 <div id="popup"><span id="popupText"></span></div>
 
 <script>
-let yes = 0;
-let no = 0;
-let typed = false;
+let yes=0,no=0,typed=false;
 
-const heartColors = ['#b76e79','#e6c7a3','#c48a6a','#f2d6c1','#d4a5a5'];
+const heartColors=['#b76e79','#e6c7a3','#c48a6a','#f2d6c1','#d4a5a5'];
 
-function openEnvelope() {
+function openEnvelope(){
     document.getElementById('envelope').classList.add('open');
-
-    setTimeout(() => {
-        const card = document.getElementById('card');
-        card.style.display = 'block';
-        setTimeout(() => card.classList.add('show'), 50);
-
-        if (!typed) {
-            startTyping();
-            typed = true;
-        }
-    }, 700);
+    setTimeout(()=>{
+        let card=document.getElementById('card');
+        card.style.display='block';
+        setTimeout(()=>card.classList.add('show'),50);
+        if(!typed){startTyping();typed=true;}
+    },700);
 }
 
-function typeLine(id, text, delay) {
-    let i = 0;
-    setTimeout(() => {
-        let interval = setInterval(() => {
-            document.getElementById(id).innerHTML += text.charAt(i);
+function typeLine(id,text,delay){
+    let i=0;
+    setTimeout(()=>{
+        let interval=setInterval(()=>{
+            document.getElementById(id).innerHTML+=text.charAt(i);
             i++;
-            if (i >= text.length) clearInterval(interval);
-        }, 35);
-    }, delay);
+            if(i>=text.length)clearInterval(interval);
+        },35);
+    },delay);
 }
 
-function startTyping() {
-    typeLine("line1", "With joy in our hearts,", 0);
-    typeLine("line2", "we invite you to celebrate our engagement 💖", 1500);
-    typeLine("line3", "📅 April 18, 2026", 3500);
-    typeLine("line4", "📍 Cairo, Egypt, Galaa club, the view venue", 5000);
+function startTyping(){
+    typeLine("line1","With joy in our hearts,",0);
+    typeLine("line2","we invite you to celebrate our engagement 💖",1500);
+    typeLine("line3","📅 April 18, 2026",3500);
+    typeLine("line4","📍 Cairo, Egypt, Galaa club, the view venue",5000);
 }
 
-/* ❤️ HEARTS WORKING */
+/* ❤️ HEARTS */
 function createFloatingHeart(){
-    const heart = document.createElement('div');
-    heart.className = 'floating-heart';
+    const heart=document.createElement('div');
+    heart.className='floating-heart';
 
-    heart.style.left = Math.random() * window.innerWidth + 'px';
-    heart.style.backgroundColor = heartColors[Math.floor(Math.random()*heartColors.length)];
+    heart.style.left=Math.random()*window.innerWidth+'px';
+    heart.style.backgroundColor=heartColors[Math.floor(Math.random()*heartColors.length)];
+
+    const rotation=25+Math.random()*40;
+    heart.style.setProperty('--rotate', rotation+'deg');
 
     document.body.appendChild(heart);
-
-    setTimeout(() => heart.remove(), 4000);
+    setTimeout(()=>heart.remove(),4000);
 }
 
-function coming() {
+function coming(){
     yes++;
-    document.getElementById("yesCount").innerText = yes;
+    document.getElementById("yesCount").innerText=yes;
 
     showPopup("We’re so excited to see you ❤️");
 
-    let interval = setInterval(createFloatingHeart, 100);
-    setTimeout(() => clearInterval(interval), 2500);
+    let interval=setInterval(createFloatingHeart,100);
+    setTimeout(()=>clearInterval(interval),2500);
 }
 
-function notComing() {
+function notComing(){
     no++;
-    document.getElementById("noCount").innerText = no;
+    document.getElementById("noCount").innerText=no;
     showPopup("You’ll be missed 😔");
 }
 
-function showPopup(message) {
-    const popup = document.getElementById("popup");
-    document.getElementById("popupText").innerText = message;
-    popup.style.display = "block";
-    setTimeout(() => popup.style.display = "none", 2500);
+function showPopup(msg){
+    let p=document.getElementById("popup");
+    document.getElementById("popupText").innerText=msg;
+    p.style.display="block";
+    setTimeout(()=>p.style.display="none",2500);
 }
 
-const eventDate = new Date("April 18, 2026 00:00:00").getTime();
+/* Countdown */
+const eventDate=new Date("April 18, 2026").getTime();
 
-setInterval(() => {
-    const now = new Date().getTime();
-    const diff = eventDate - now;
+setInterval(()=>{
+    let now=new Date().getTime();
+    let diff=eventDate-now;
 
-    const d = Math.floor(diff / (1000*60*60*24));
-    const h = Math.floor((diff / (1000*60*60)) % 24);
-    const m = Math.floor((diff / (1000*60)) % 60);
+    let d=Math.floor(diff/(1000*60*60*24));
+    let h=Math.floor((diff/(1000*60*60))%24);
+    let m=Math.floor((diff/(1000*60))%60);
 
-    document.getElementById("countdown").innerHTML =
-        d + " days • " + h + " hrs • " + m + " min";
-}, 1000);
+    document.getElementById("countdown").innerHTML=
+        d+" days • "+h+" hrs • "+m+" min";
+},1000);
 </script>
 
 </body>
