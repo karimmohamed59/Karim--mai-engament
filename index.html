@@ -4,161 +4,331 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Invitation</title>
+<title>Karim & Mai Engagement</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
 body {
     margin: 0;
-    background: #f4efe9;
+    background: linear-gradient(135deg, #f7f3f2, #ece6e3);
+    font-family: 'Poppins', sans-serif;
+
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    height: 100vh;
+    justify-content: center;
+
+    min-height: 100vh;
+    color: #444;
+    text-align: center;
 }
 
-/* Container */
+/* Envelope */
 .envelope {
+    margin-top: 60px;
+    width: 90%;
+    max-width: 360px;
+    height: 220px;
+    background: rgba(255,255,255,0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 18px;
     position: relative;
-    width: 340px;
-    height: 230px;
     cursor: pointer;
-    perspective: 1200px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+    transition: 0.4s;
 }
 
-/* Base */
-.base {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: #e9dccf;
-    border-radius: 8px;
-    box-shadow: 0 30px 70px rgba(0,0,0,0.2);
+.envelope:hover {
+    transform: translateY(-5px);
 }
 
-/* Inner fold */
-.inner {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: #f7efe6;
-    clip-path: polygon(0 100%, 50% 40%, 100% 100%);
-    z-index: 2;
-}
-
-/* Flap */
 .flap {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: linear-gradient(180deg, #d8c3ad, #cdb49d);
+    background: linear-gradient(135deg, #d6a77a, #c48a6a);
     clip-path: polygon(0 0, 100% 0, 50% 65%);
     transform-origin: top;
-    transition: transform 1.2s cubic-bezier(.65,0,.35,1);
-    z-index: 4;
-    backface-visibility: hidden;
+    transition: 0.8s ease;
 }
 
-/* Wax seal */
-.seal {
-    position: absolute;
-    width: 44px;
-    height: 44px;
-    background: radial-gradient(circle at 30% 30%, #b94b45, #7a1f1c);
-    border-radius: 50%;
-    top: 95px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 5;
-    transition: all 0.6s ease;
-}
-
-/* Letter */
-.letter {
-    position: absolute;
-    width: 86%;
-    height: 170px;
-    background: #ffffff;
-    top: 40px;
-    left: 7%;
-    border-radius: 6px;
-
-    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-
-    transform: translateY(35px);
-    transition: transform 1.2s cubic-bezier(.65,0,.35,1);
-    z-index: 1;
-}
-
-/* ✨ OPEN STATE */
 .envelope.open .flap {
     transform: rotateX(180deg);
 }
 
-.envelope.open .seal {
-    transform: translateX(-50%) scale(0.7);
+/* Open text */
+.open-text {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    padding: 8px 22px;
+    border-radius: 20px;
+    font-size: 13px;
+    letter-spacing: 1px;
+    color: #777;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+/* Card */
+.card {
+    display: none;
+    margin-top: 40px;
+    width: 90%;
+    max-width: 400px;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(12px);
+    padding: 40px 25px;
+    border-radius: 22px;
+    box-shadow: 0 25px 70px rgba(0,0,0,0.12);
+
     opacity: 0;
+    transform: translateY(20px);
+    transition: 0.8s ease;
 }
 
-.envelope.open .letter {
-    transform: translateY(-140px);
+.card.show {
+    opacity: 1;
+    transform: translateY(0);
 }
 
-/* TEXT */
+/* ✨ LUXURY GOLD SHIMMER TITLE */
 .title {
     font-family: 'Great Vibes', cursive;
-    font-size: 34px;
+    font-size: 40px;
+    margin-bottom: 5px;
 
-    background: linear-gradient(120deg,#b76e79,#e6c7a3,#fff,#e6c7a3,#b76e79);
+    background: linear-gradient(
+        120deg,
+        #b76e79 20%,
+        #e6c7a3 40%,
+        #ffffff 50%,
+        #e6c7a3 60%,
+        #b76e79 80%
+    );
+
     background-size: 200% auto;
     color: transparent;
     -webkit-background-clip: text;
+    background-clip: text;
 
-    animation: shimmer 5s infinite;
+    animation: goldShimmer 5s ease-in-out infinite;
 }
 
+/* Shimmer animation */
+@keyframes goldShimmer {
+    0% { background-position: 200% center; }
+    100% { background-position: -200% center; }
+}
+
+/* Divider */
+.divider {
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(to right, transparent, #c48a6a, transparent);
+    margin: 12px auto 20px;
+}
+
+/* Subtitle */
 .subtitle {
-    margin-top: 8px;
+    letter-spacing: 2px;
     font-size: 13px;
+    color: #999;
+    margin-bottom: 15px;
+}
+
+/* Text */
+.typing {
+    min-height: 22px;
+    margin: 8px 0;
+    font-size: 15px;
+    color: #555;
+}
+
+/* Countdown */
+#countdown {
+    margin: 18px 0;
+    font-size: 14px;
     color: #777;
 }
 
-/* shimmer */
-@keyframes shimmer {
-    0% { background-position: 200% center; }
-    100% { background-position: -200% center; }
+/* Button */
+.location-btn {
+    margin: 15px 0;
+    background: linear-gradient(135deg, #b76e79, #c48a6a);
+    color: white;
+    padding: 10px 26px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-size: 14px;
+    display: inline-block;
+}
+
+/* Divider */
+hr {
+    margin: 30px 0;
+    border: none;
+    border-top: 1px solid #eee;
+}
+
+/* RSVP buttons */
+button {
+    margin: 8px;
+    padding: 10px 24px;
+    border-radius: 25px;
+    border: 1px solid #b76e79;
+    background: transparent;
+    color: #b76e79;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #b76e79;
+    color: white;
+}
+
+/* Counters */
+.counter {
+    position: fixed;
+    top: 12px;
+    font-size: 13px;
+    color: #888;
+}
+#yesCount { left: 15px; }
+#noCount { right: 15px; }
+
+/* Popup */
+#popup {
+    display:none;
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%, -50%);
+    background:white;
+    padding:18px 25px;
+    border-radius:15px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.15);
+    font-size:16px;
+}
+
+/* Desktop zoom */
+@media (min-width: 1024px) {
+    body { zoom: 1.1; }
 }
 </style>
 </head>
 
 <body>
 
+<div id="yesCount" class="counter">0</div>
+<div id="noCount" class="counter">0</div>
+
 <div class="envelope" onclick="openEnvelope()">
-
-    <div class="base"></div>
-    <div class="inner"></div>
+    <div class="open-text">Tap to Open</div>
     <div class="flap"></div>
-    <div class="seal"></div>
+</div>
 
-    <div class="letter">
-        <div>
-            <div class="title">Karim & Mai</div>
-            <div class="subtitle">Engagement Invitation</div>
-        </div>
-    </div>
+<div id="card" class="card">
+
+    <div class="title">Karim & Mai</div>
+    <div class="divider"></div>
+    <div class="subtitle">ENGAGEMENT</div>
+
+    <div id="line1" class="typing"></div>
+    <div id="line2" class="typing"></div>
+    <div id="line3" class="typing"></div>
+    <div id="line4" class="typing"></div>
+
+    <div id="countdown"></div>
+
+    <a class="location-btn" href="https://maps.app.goo.gl/DCoZfnU6cCvsSjgy9" target="_blank">
+        View Location
+    </a>
+
+    <hr>
+
+    <div><b>Will you join us?</b></div>
+
+    <button onclick="coming()">Accept</button>
+    <button onclick="notComing()">Decline</button>
 
 </div>
 
+<div id="popup"><span id="popupText"></span></div>
+
 <script>
+let yes = 0;
+let no = 0;
+let typed = false;
+
 function openEnvelope() {
-    document.querySelector('.envelope').classList.toggle('open');
+    document.querySelector('.envelope').classList.add('open');
+
+    setTimeout(() => {
+        const card = document.getElementById('card');
+        card.style.display = 'block';
+        setTimeout(() => card.classList.add('show'), 50);
+
+        if (!typed) {
+            startTyping();
+            typed = true;
+        }
+    }, 700);
 }
+
+function typeLine(id, text, delay) {
+    let i = 0;
+    setTimeout(() => {
+        let interval = setInterval(() => {
+            document.getElementById(id).innerHTML += text.charAt(i);
+            i++;
+            if (i >= text.length) clearInterval(interval);
+        }, 35);
+    }, delay);
+}
+
+function startTyping() {
+    typeLine("line1", "With joy in our hearts,", 0);
+    typeLine("line2", "we invite you to celebrate our engagement", 1500);
+    typeLine("line3", "April 18, 2026", 3500);
+    typeLine("line4", "Cairo, Egypt – Galaa Club, The View Venue", 5000);
+}
+
+function coming() {
+    yes++;
+    document.getElementById("yesCount").innerText = yes;
+    showPopup("We look forward to celebrating with you");
+}
+
+function notComing() {
+    no++;
+    document.getElementById("noCount").innerText = no;
+    showPopup("You will be missed");
+}
+
+function showPopup(message) {
+    const popup = document.getElementById("popup");
+    document.getElementById("popupText").innerText = message;
+    popup.style.display = "block";
+    setTimeout(() => popup.style.display = "none", 2500);
+}
+
+const eventDate = new Date("April 18, 2026 00:00:00").getTime();
+
+setInterval(() => {
+    const now = new Date().getTime();
+    const diff = eventDate - now;
+
+    const d = Math.floor(diff / (1000*60*60*24));
+    const h = Math.floor((diff / (1000*60*60)) % 24);
+    const m = Math.floor((diff / (1000*60)) % 60);
+
+    document.getElementById("countdown").innerHTML =
+        d + " days • " + h + " hrs • " + m + " min";
+}, 1000);
 </script>
 
 </body>
