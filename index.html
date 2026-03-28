@@ -18,25 +18,26 @@ body {
     height: 100vh;
 }
 
-/* Envelope container */
+/* Container */
 .envelope {
     position: relative;
-    width: 320px;
-    height: 220px;
+    width: 340px;
+    height: 230px;
     cursor: pointer;
+    perspective: 1200px;
 }
 
-/* Bottom envelope */
+/* Base */
 .base {
     position: absolute;
     width: 100%;
     height: 100%;
     background: #e9dccf;
     border-radius: 8px;
-    box-shadow: 0 25px 60px rgba(0,0,0,0.15);
+    box-shadow: 0 30px 70px rgba(0,0,0,0.2);
 }
 
-/* Inner triangle */
+/* Inner fold */
 .inner {
     position: absolute;
     width: 100%;
@@ -46,66 +47,73 @@ body {
     z-index: 2;
 }
 
-/* Top flap */
+/* Flap */
 .flap {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: #d8c3ad;
+    background: linear-gradient(180deg, #d8c3ad, #cdb49d);
     clip-path: polygon(0 0, 100% 0, 50% 65%);
     transform-origin: top;
-    transition: 1s ease;
-    z-index: 3;
+    transition: transform 1.2s cubic-bezier(.65,0,.35,1);
+    z-index: 4;
+    backface-visibility: hidden;
 }
 
 /* Wax seal */
 .seal {
     position: absolute;
-    width: 42px;
-    height: 42px;
-    background: #9e3b36;
+    width: 44px;
+    height: 44px;
+    background: radial-gradient(circle at 30% 30%, #b94b45, #7a1f1c);
     border-radius: 50%;
     top: 95px;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 4;
-    box-shadow: inset 0 3px 6px rgba(0,0,0,0.3);
+    z-index: 5;
+    transition: all 0.6s ease;
 }
 
 /* Letter */
 .letter {
     position: absolute;
-    width: 85%;
-    height: 160px;
+    width: 86%;
+    height: 170px;
     background: #ffffff;
     top: 40px;
-    left: 7.5%;
+    left: 7%;
     border-radius: 6px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
 
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     text-align: center;
 
-    transform: translateY(30px);
-    transition: 1s ease;
+    transform: translateY(35px);
+    transition: transform 1.2s cubic-bezier(.65,0,.35,1);
     z-index: 1;
 }
 
-/* Opening animation */
+/* ✨ OPEN STATE */
 .envelope.open .flap {
     transform: rotateX(180deg);
 }
 
-.envelope.open .letter {
-    transform: translateY(-120px);
+.envelope.open .seal {
+    transform: translateX(-50%) scale(0.7);
+    opacity: 0;
 }
 
-/* Text */
+.envelope.open .letter {
+    transform: translateY(-140px);
+}
+
+/* TEXT */
 .title {
     font-family: 'Great Vibes', cursive;
-    font-size: 32px;
+    font-size: 34px;
 
     background: linear-gradient(120deg,#b76e79,#e6c7a3,#fff,#e6c7a3,#b76e79);
     background-size: 200% auto;
@@ -115,15 +123,16 @@ body {
     animation: shimmer 5s infinite;
 }
 
+.subtitle {
+    margin-top: 8px;
+    font-size: 13px;
+    color: #777;
+}
+
+/* shimmer */
 @keyframes shimmer {
     0% { background-position: 200% center; }
     100% { background-position: -200% center; }
-}
-
-.subtitle {
-    font-size: 13px;
-    color: #777;
-    margin-top: 8px;
 }
 </style>
 </head>
