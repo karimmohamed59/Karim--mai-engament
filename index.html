@@ -35,7 +35,8 @@ body {
     cursor: pointer;
     box-shadow: 0 25px 80px rgba(183, 110, 121, 0.25);
     transition: 0.4s;
-    perspective: 1000px; /* for flap rotation */
+    perspective: 1000px;
+    transform-style: preserve-3d; /* enable 3D flip */
 }
 
 .envelope:hover { transform: translateY(-5px); }
@@ -48,7 +49,7 @@ body {
     clip-path: polygon(0 0, 100% 0, 50% 65%);
     transform-origin: top;
     transition: 0.8s ease;
-    backface-visibility: hidden; /* fixes flipping */
+    backface-visibility: hidden;
 }
 
 .envelope.open .flap {
@@ -141,7 +142,7 @@ button:hover { background: #b76e79; color: white; }
 <div id="yesCount" class="counter">0</div>
 <div id="noCount" class="counter">0</div>
 
-<div class="envelope" id="envelope">
+<div class="envelope" id="envelope" onclick="openEnvelope()">
     <div class="open-text">Tap to Open</div>
     <div class="flap"></div>
 </div>
@@ -174,7 +175,8 @@ let yes=0, no=0, typed=false;
 const heartColors=['#b76e79','#e6c7a3','#c48a6a'];
 
 function openEnvelope(){
-    document.getElementById('envelope').classList.add('open');
+    const env=document.getElementById('envelope');
+    env.classList.add('open');
     setTimeout(()=>{
         const card=document.getElementById('card');
         card.style.display='block';
@@ -241,5 +243,6 @@ setInterval(()=>{
     document.getElementById("countdown").innerHTML=d+" days • "+h+" hrs • "+m+" min";
 },1000);
 </script>
+
 </body>
 </html>
