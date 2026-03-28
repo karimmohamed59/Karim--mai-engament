@@ -13,12 +13,10 @@ body {
     margin: 0;
     background: linear-gradient(135deg, #f7f3f2, #ece6e3);
     font-family: 'Poppins', sans-serif;
-
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
     min-height: 100vh;
     color: #444;
     text-align: center;
@@ -38,10 +36,7 @@ body {
     box-shadow: 0 25px 80px rgba(183, 110, 121, 0.25);
     transition: 0.4s;
 }
-
-.envelope:hover {
-    transform: translateY(-5px);
-}
+.envelope:hover { transform: translateY(-5px); }
 
 .flap {
     position: absolute;
@@ -52,10 +47,7 @@ body {
     transform-origin: top;
     transition: 0.8s ease;
 }
-
-.envelope.open .flap {
-    transform: rotateX(180deg);
-}
+.envelope.open .flap { transform: rotateX(180deg); }
 
 /* Open text */
 .open-text {
@@ -83,180 +75,64 @@ body {
     padding: 40px 25px;
     border-radius: 22px;
     box-shadow: 0 25px 70px rgba(0,0,0,0.12);
-
     opacity: 0;
     transform: translateY(20px);
     transition: 0.8s ease;
 }
+.card.show { opacity: 1; transform: translateY(0); }
 
-.card.show {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* ✨ LUXURY GOLD SHIMMER TITLE */
+/* ✨ Luxury gold shimmer title */
 .title {
     font-family: 'Great Vibes', cursive;
     font-size: 40px;
     margin-bottom: 5px;
-
-    background: linear-gradient(
-        120deg,
-        #b76e79 20%,
-        #e6c7a3 40%,
-        #ffffff 50%,
-        #e6c7a3 60%,
-        #b76e79 80%
-    );
-
+    background: linear-gradient(120deg,#b76e79 20%,#e6c7a3 40%,#ffffff 50%,#e6c7a3 60%,#b76e79 80%);
     background-size: 200% auto;
     color: transparent;
     -webkit-background-clip: text;
     background-clip: text;
-
     animation: goldShimmer 5s ease-in-out infinite;
 }
+@keyframes goldShimmer { 0% { background-position:200% center; } 100% { background-position:-200% center; } }
 
-/* Shimmer animation */
-@keyframes goldShimmer {
-    0% { background-position: 200% center; }
-    100% { background-position: -200% center; }
-}
-
-/* Divider */
-.divider {
-    width: 60px;
-    height: 2px;
-    background: linear-gradient(to right, transparent, #c48a6a, transparent);
-    margin: 12px auto 20px;
-}
-
-/* Subtitle */
-.subtitle {
-    letter-spacing: 3px;
-    font-size: 14px;
-    color: #aa8a6b;
-    font-weight: 600;
-    margin-bottom: 15px;
-}
-
-/* Text */
-.typing {
-    min-height: 22px;
-    margin: 8px 0;
-    font-size: 15px;
-    color: #555;
-    letter-spacing: 0.7px;
-    line-height: 1.5;
-}
-
-/* Countdown */
-#countdown {
-    margin: 18px 0;
-    font-size: 14px;
-    color: #777;
-    font-weight: 500;
-    letter-spacing: 1.1px;
-}
-
-/* Button */
-.location-btn {
-    margin: 15px 0;
-    background: linear-gradient(135deg, #b76e79, #c48a6a);
-    color: white;
-    padding: 10px 26px;
-    border-radius: 25px;
-    text-decoration: none;
-    font-size: 14px;
-    display: inline-block;
-}
-
-/* Divider */
-hr {
-    margin: 30px 0;
-    border: none;
-    border-top: 1px solid #eee;
-}
-
-/* RSVP buttons */
-button {
-    margin: 8px;
-    padding: 10px 24px;
-    border-radius: 25px;
-    border: 1px solid #b76e79;
-    background: transparent;
-    color: #b76e79;
-    cursor: pointer;
-    transition: 0.3s;
-    font-weight: 600;
-}
-
-button:hover {
-    background: #b76e79;
-    color: white;
-}
-
-/* Counters */
-.counter {
-    position: fixed;
-    top: 12px;
-    font-size: 13px;
-    color: #888;
-}
-#yesCount { left: 15px; }
-#noCount { right: 15px; }
-
-/* Popup */
-#popup {
-    display:none;
-    position:fixed;
-    top:50%;
-    left:50%;
-    transform:translate(-50%, -50%);
-    background:white;
-    padding:18px 25px;
-    border-radius:15px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.15);
-    font-size:16px;
-}
+.divider { width: 60px; height: 2px; background: linear-gradient(to right, transparent, #c48a6a, transparent); margin: 12px auto 20px; }
+.subtitle { letter-spacing: 3px; font-size: 14px; color: #aa8a6b; font-weight: 600; margin-bottom: 15px; }
+.typing { min-height: 22px; margin: 8px 0; font-size: 15px; color: #555; letter-spacing: 0.7px; line-height: 1.5; }
+#countdown { margin: 18px 0; font-size: 14px; color: #777; font-weight: 500; letter-spacing: 1.1px; }
+.location-btn { margin: 15px 0; background: linear-gradient(135deg, #b76e79, #c48a6a); color: white; padding: 10px 26px; border-radius: 25px; text-decoration: none; font-size: 14px; display: inline-block; }
+hr { margin: 30px 0; border: none; border-top: 1px solid #eee; }
+button { margin: 8px; padding: 10px 24px; border-radius: 25px; border: 1px solid #b76e79; background: transparent; color: #b76e79; cursor: pointer; transition: 0.3s; font-weight: 600; }
+button:hover { background: #b76e79; color: white; }
+.counter { position: fixed; top: 12px; font-size: 13px; color: #888; }
+#yesCount { left: 15px; } #noCount { right: 15px; }
+#popup { display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:white; padding:18px 25px; border-radius:15px; box-shadow:0 10px 25px rgba(0,0,0,0.15); font-size:16px; }
 
 /* Floating hearts */
 .floating-heart {
-    position: fixed;
-    bottom: -15px;
+    position: absolute;
     width: 14px;
     height: 14px;
     transform: rotate(45deg);
     border-radius: 3px 3px 0 0;
     opacity: 0.85;
-    animation: floatUp 6s linear forwards;
-    box-shadow:
-        2px -2px 5px rgba(255, 255, 255, 0.2),
-        inset 0 0 6px rgba(255, 255, 255, 0.4);
+    animation: floatUp 6s linear forwards, flutter 1.5s ease-in-out infinite alternate;
+    box-shadow: 2px -2px 5px rgba(255,255,255,0.2), inset 0 0 6px rgba(255,255,255,0.4);
     z-index: 9999;
 }
-
-.floating-heart::before,
-.floating-heart::after {
-    content: "";
-    position: absolute;
-    width: 14px;
-    height: 14px;
-    background: inherit;
-    border-radius: 50%;
-}
-.floating-heart::before { top: -7px; left: 0; }
-.floating-heart::after { left: 7px; top: 0; }
+.floating-heart::before, .floating-heart::after { content:""; position:absolute; width:14px; height:14px; background:inherit; border-radius:50%; }
+.floating-heart::before { top: -7px; left:0; } .floating-heart::after { left:7px; top:0; }
 
 @keyframes floatUp {
     0% { opacity: 0.85; transform: translateY(0) rotate(45deg); }
     100% { opacity: 0; transform: translateY(-120vh) rotate(45deg); }
 }
+@keyframes flutter {
+    0% { transform: translateX(0) rotate(45deg); }
+    100% { transform: translateX(12px) rotate(45deg); }
+}
 
 /* Desktop zoom */
-@media (min-width: 1024px) {
-    body { zoom: 1.1; }
-}
+@media (min-width: 1024px) { body { zoom: 1.1; } }
 </style>
 </head>
 
@@ -265,7 +141,7 @@ button:hover {
 <div id="yesCount" class="counter">0</div>
 <div id="noCount" class="counter">0</div>
 
-<div class="envelope" onclick="openEnvelope()">
+<div class="envelope" id="envelope">
     <div class="open-text">Tap to Open</div>
     <div class="flap"></div>
 </div>
@@ -283,109 +159,88 @@ button:hover {
 
     <div id="countdown"></div>
 
-    <a class="location-btn" href="https://maps.app.goo.gl/DCoZfnU6cCvsSjgy9" target="_blank">
-        View Location
-    </a>
+    <a class="location-btn" href="https://maps.app.goo.gl/DCoZfnU6cCvsSjgy9" target="_blank">View Location</a>
 
     <hr>
-
     <div><b>Will you join us?</b></div>
-
     <button onclick="coming()">Accept</button>
     <button onclick="notComing()">Decline</button>
-
 </div>
 
 <div id="popup"><span id="popupText"></span></div>
 
 <script>
-let yes = 0;
-let no = 0;
-let typed = false;
+let yes=0, no=0, typed=false;
+const heartColors=['#b76e79','#e6c7a3','#c48a6a'];
 
-// Open envelope
-function openEnvelope() {
-    document.querySelector('.envelope').classList.add('open');
-    setTimeout(() => {
-        const card = document.getElementById('card');
-        card.style.display = 'block';
-        setTimeout(() => card.classList.add('show'), 50);
-        if (!typed) {
-            startTyping();
-            typed = true;
-        }
-    }, 700);
+// Envelope click
+function openEnvelope(){
+    document.getElementById('envelope').classList.add('open');
+    setTimeout(()=>{
+        const card=document.getElementById('card');
+        card.style.display='block';
+        setTimeout(()=>card.classList.add('show'),50);
+        if(!typed){ startTyping(); typed=true; }
+    },700);
 }
 
 // Typing animation
-function typeLine(id, text, delay) {
-    let i = 0;
-    setTimeout(() => {
-        let interval = setInterval(() => {
-            document.getElementById(id).innerHTML += text.charAt(i);
-            i++;
-            if (i >= text.length) clearInterval(interval);
-        }, 35);
-    }, delay);
+function typeLine(id,text,delay){
+    let i=0;
+    setTimeout(()=>{
+        let interval=setInterval(()=>{
+            document.getElementById(id).innerHTML+=text.charAt(i);
+            i++; if(i>=text.length) clearInterval(interval);
+        },35);
+    },delay);
+}
+function startTyping(){
+    typeLine("line1","With joy in our hearts,",0);
+    typeLine("line2","we invite you to celebrate our engagement",1500);
+    typeLine("line3","April 18, 2026",3500);
+    typeLine("line4","Cairo, Egypt – Galaa Club, The View Venue",5000);
 }
 
-function startTyping() {
-    typeLine("line1", "With joy in our hearts,", 0);
-    typeLine("line2", "we invite you to celebrate our engagement", 1500);
-    typeLine("line3", "April 18, 2026", 3500);
-    typeLine("line4", "Cairo, Egypt – Galaa Club, The View Venue", 5000);
-}
-
-// Popup
-function showPopup(message) {
-    const popup = document.getElementById("popup");
-    document.getElementById("popupText").innerText = message;
-    popup.style.display = "block";
-    setTimeout(() => popup.style.display = "none", 2500);
-}
-
-// Floating hearts colors
-const heartColors = ['#b76e79','#e6c7a3','#c48a6a'];
-
-// Create a floating heart
-function createFloatingHeart() {
-    const heart = document.createElement('div');
-    heart.className = 'floating-heart';
-    heart.style.backgroundColor = heartColors[Math.floor(Math.random() * heartColors.length)];
-    heart.style.left = (10 + Math.random() * 80) + 'vw';
+// Floating heart creation
+function createFloatingHeartFromEnvelope(){
+    const envelope=document.getElementById('envelope');
+    const rect=envelope.getBoundingClientRect();
+    const heart=document.createElement('div');
+    heart.className='floating-heart';
+    heart.style.backgroundColor=heartColors[Math.floor(Math.random()*heartColors.length)];
+    heart.style.left=rect.left + 30 + Math.random()*(rect.width-60) + 'px';
+    heart.style.top=rect.top + 'px';
     document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 6000);
+    setTimeout(()=>heart.remove(),6000);
 }
 
 // RSVP
-function coming() {
-    yes++;
-    document.getElementById("yesCount").innerText = yes;
+function coming(){
+    yes++; document.getElementById("yesCount").innerText=yes;
     showPopup("We look forward to celebrating with you");
-    
-    // Generate hearts for 3 seconds
-    let heartsInterval = setInterval(createFloatingHeart, 300);
-    setTimeout(() => clearInterval(heartsInterval), 3000);
+    let heartsInterval=setInterval(createFloatingHeartFromEnvelope,300);
+    setTimeout(()=>clearInterval(heartsInterval),3000);
 }
+function notComing(){ no++; document.getElementById("noCount").innerText=no; showPopup("You will be missed"); }
 
-function notComing() {
-    no++;
-    document.getElementById("noCount").innerText = no;
-    showPopup("You will be missed");
+// Popup
+function showPopup(message){
+    const popup=document.getElementById("popup");
+    document.getElementById("popupText").innerText=message;
+    popup.style.display="block";
+    setTimeout(()=>popup.style.display="none",2500);
 }
 
 // Countdown
-const eventDate = new Date("April 18, 2026 00:00:00").getTime();
-setInterval(() => {
-    const now = new Date().getTime();
-    const diff = eventDate - now;
-    const d = Math.floor(diff / (1000*60*60*24));
-    const h = Math.floor((diff / (1000*60*60)) % 24);
-    const m = Math.floor((diff / (1000*60)) % 60);
-    document.getElementById("countdown").innerHTML =
-        d + " days • " + h + " hrs • " + m + " min";
-}, 1000);
+const eventDate=new Date("April 18, 2026 00:00:00").getTime();
+setInterval(()=>{
+    const now=new Date().getTime();
+    const diff=eventDate-now;
+    const d=Math.floor(diff/(1000*60*60*24));
+    const h=Math.floor((diff/(1000*60*60))%24);
+    const m=Math.floor((diff/(1000*60))%60);
+    document.getElementById("countdown").innerHTML=d+" days • "+h+" hrs • "+m+" min";
+},1000);
 </script>
-
 </body>
 </html>
