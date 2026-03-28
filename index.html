@@ -35,7 +35,9 @@ body {
     cursor: pointer;
     box-shadow: 0 25px 80px rgba(183, 110, 121, 0.25);
     transition: 0.4s;
+    perspective: 1000px; /* for flap rotation */
 }
+
 .envelope:hover { transform: translateY(-5px); }
 
 .flap {
@@ -46,8 +48,12 @@ body {
     clip-path: polygon(0 0, 100% 0, 50% 65%);
     transform-origin: top;
     transition: 0.8s ease;
+    backface-visibility: hidden; /* fixes flipping */
 }
-.envelope.open .flap { transform: rotateX(180deg); }
+
+.envelope.open .flap {
+    transform: rotateX(-180deg);
+}
 
 /* Open text */
 .open-text {
@@ -122,14 +128,8 @@ button:hover { background: #b76e79; color: white; }
 .floating-heart::before, .floating-heart::after { content:""; position:absolute; width:14px; height:14px; background:inherit; border-radius:50%; }
 .floating-heart::before { top: -7px; left:0; } .floating-heart::after { left:7px; top:0; }
 
-@keyframes floatUp {
-    0% { opacity: 0.85; transform: translateY(0) rotate(45deg); }
-    100% { opacity: 0; transform: translateY(-120vh) rotate(45deg); }
-}
-@keyframes flutter {
-    0% { transform: translateX(0) rotate(45deg); }
-    100% { transform: translateX(12px) rotate(45deg); }
-}
+@keyframes floatUp { 0% { opacity:0.85; transform:translateY(0) rotate(45deg);} 100% { opacity:0; transform:translateY(-120vh) rotate(45deg); } }
+@keyframes flutter { 0% { transform: translateX(0) rotate(45deg); } 100% { transform: translateX(12px) rotate(45deg); } }
 
 /* Desktop zoom */
 @media (min-width: 1024px) { body { zoom: 1.1; } }
@@ -173,7 +173,6 @@ button:hover { background: #b76e79; color: white; }
 let yes=0, no=0, typed=false;
 const heartColors=['#b76e79','#e6c7a3','#c48a6a'];
 
-// Envelope click
 function openEnvelope(){
     document.getElementById('envelope').classList.add('open');
     setTimeout(()=>{
@@ -184,7 +183,6 @@ function openEnvelope(){
     },700);
 }
 
-// Typing animation
 function typeLine(id,text,delay){
     let i=0;
     setTimeout(()=>{
@@ -194,6 +192,7 @@ function typeLine(id,text,delay){
         },35);
     },delay);
 }
+
 function startTyping(){
     typeLine("line1","With joy in our hearts,",0);
     typeLine("line2","we invite you to celebrate our engagement",1500);
@@ -201,7 +200,6 @@ function startTyping(){
     typeLine("line4","Cairo, Egypt – Galaa Club, The View Venue",5000);
 }
 
-// Floating heart creation
 function createFloatingHeartFromEnvelope(){
     const envelope=document.getElementById('envelope');
     const rect=envelope.getBoundingClientRect();
@@ -214,16 +212,18 @@ function createFloatingHeartFromEnvelope(){
     setTimeout(()=>heart.remove(),6000);
 }
 
-// RSVP
 function coming(){
     yes++; document.getElementById("yesCount").innerText=yes;
     showPopup("We look forward to celebrating with you");
     let heartsInterval=setInterval(createFloatingHeartFromEnvelope,300);
     setTimeout(()=>clearInterval(heartsInterval),3000);
 }
-function notComing(){ no++; document.getElementById("noCount").innerText=no; showPopup("You will be missed"); }
 
-// Popup
+function notComing(){ 
+    no++; document.getElementById("noCount").innerText=no; 
+    showPopup("You will be missed"); 
+}
+
 function showPopup(message){
     const popup=document.getElementById("popup");
     document.getElementById("popupText").innerText=message;
@@ -231,7 +231,6 @@ function showPopup(message){
     setTimeout(()=>popup.style.display="none",2500);
 }
 
-// Countdown
 const eventDate=new Date("April 18, 2026 00:00:00").getTime();
 setInterval(()=>{
     const now=new Date().getTime();
