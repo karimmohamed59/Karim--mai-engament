@@ -94,12 +94,33 @@ body {
     transform: translateY(0);
 }
 
-/* Title */
+/* ✨ LUXURY GOLD SHIMMER TITLE */
 .title {
     font-family: 'Great Vibes', cursive;
     font-size: 40px;
-    color: #b76e79;
     margin-bottom: 5px;
+
+    background: linear-gradient(
+        120deg,
+        #b76e79 20%,
+        #e6c7a3 40%,
+        #ffffff 50%,
+        #e6c7a3 60%,
+        #b76e79 80%
+    );
+
+    background-size: 200% auto;
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    animation: goldShimmer 5s ease-in-out infinite;
+}
+
+/* Shimmer animation */
+@keyframes goldShimmer {
+    0% { background-position: 200% center; }
+    100% { background-position: -200% center; }
 }
 
 /* Divider */
@@ -249,7 +270,6 @@ function openEnvelope() {
     setTimeout(() => {
         const card = document.getElementById('card');
         card.style.display = 'block';
-
         setTimeout(() => card.classList.add('show'), 50);
 
         if (!typed) {
